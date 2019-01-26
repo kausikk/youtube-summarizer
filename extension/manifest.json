@@ -1,0 +1,21 @@
+{
+	"name": "YouTube Summarizer",
+	"description" : "Base Level Extension",
+	"version": "1.0",
+	"manifest_version": 2,
+
+	"browser_action": {
+	  "default_popup": "summarizer.html",
+	  "default_icon": "extension_icon.png"
+	},
+
+	"commands": {
+	  "_execute_browser_action": {
+	    "suggested_key": {
+	      "default": "Ctrl+Shift+Y",
+	      "mac": "MacCtrl+Shift+Y"
+	    },
+	    "description": "Opens summarizer.html"
+	  }
+	}
+}
