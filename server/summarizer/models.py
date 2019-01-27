@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 class Summarizer(models.Model):

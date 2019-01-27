@@ -24,7 +24,7 @@ def execute(request, ytube_id, percent):
     global transcript
     transcript_raw, word_list = parse_transcript(transcript)
     punctuated_transcript = punctuate(transcript_raw)
-    sentence_list = split_by_sentence(transcript_raw)
+    sentence_list = split_by_sentence(punctuated_transcript)
     size = int(len(sentence_list)*percent)
     sentence_time_dict = time_match(sentence_list, word_list)
     summarizer = Summary(size)

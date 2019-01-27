@@ -12,19 +12,22 @@ def execute(ytube_id, percent):
     transcript_raw, word_list = parse_transcript(transcript)
     print(transcript_raw)
     print('**********word list***********\n')
-    print(word_list)
+    for word in word_list:
+        print(str(word))
     print('**********punctuate**********\n')
     punctuated_transcript = punctuate(transcript_raw)
     print(punctuated_transcript)
     print('**********split sentence**********\n')
-    sentence_list = split_by_sentence(transcript_raw)
+    sentence_list = split_by_sentence(punctuated_transcript)
     print(sentence_list)
     print('**********get percent**********\n')
     size = int(len(sentence_list)*percent)
     print(size)
+    print(len(sentence_list))
     print('**********match time stamp**********\n')
     sentence_time_dict = time_match(sentence_list, word_list)
-    print(sentence_time_dict)
+    for key, value in sentence_time_dict.item():
+        print (str(key) + " at " + str(value))
     print('**********initialize summarizer**********\n')
     summarizer = Summary(size)
     print('**********summarized list**********\n')
@@ -37,13 +40,18 @@ def execute(ytube_id, percent):
 def time_match(sentences, words):
     response = {}
     while len(words) != 0:
-        ordered_pair = words.popleft()
+        ordered_pair = words[0]
+        del words[0]
         word = ordered_pair.word
-        sentence = sentences.popleft()
+        sentence = sentences[0]
+        del sentences[0]
         sentence_array = sentence.split()
         response[sentence] = ordered_pair.timestamp
         for i in range(len(sentence_array)):
-            words.popleft()
+            if(len(words)!= 0):
+                del words[0]
+            else:
+                break
     return response
 
 def split_by_sentence(text):
@@ -57,4 +65,4 @@ def return_time_stamp(sentence_dict, summary):
         time_stamp_dict[sentence] = sentence_dict[sentence]
     return time_stamp_list
 
-execute("9aULhzn37DE", 0.4)
+execute("rtq_aOYsdKk", 0.4)

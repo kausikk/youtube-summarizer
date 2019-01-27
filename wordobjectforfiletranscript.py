@@ -3,6 +3,8 @@ class Word(object):
     def __init__(self, word, timestamp):
         self.word = word
         self.timestamp = timestamp
+    def __str__(self):
+        return str(self.word) + " at " + str(self.timestamp)
 
 #timestamp wrapper
 class TimeStamp(object):
