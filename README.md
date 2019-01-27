@@ -7,8 +7,12 @@
 # 2. # For getting audio from Youtube url with headless browser: 
 - https://sites.google.com/a/chromium.org/chromedriver/downloads
 - pip install selenium
-- Must add chromedriver.exe to PATH
+- Add current repo directory to PATH to allow Selenium to access the chromedriver.exe
 # 3. For transcribing audio
 - pip install --upgrade google-cloud-speech
-- Make GOOGLE_APPLICATION_CREDENTIALS and point to credentials.json file
-- Install and initialize the Google Cloud SDK: https://cloud.google.com/sdk/docs/
+- Make GOOGLE_APPLICATION_CREDENTIALS environment variable and point to credentials.json file
+# 4. For converting mp3 to ogg
+- pip install --upgrade pydub
+# 5. For uploading ogg to Google Cloud Storage
+- pip install --upgrade google-cloud-storage
+- https://cloud.google.com/storage/docs/reference/libraries#client-libraries-install-python
