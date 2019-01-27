@@ -17,7 +17,7 @@ body {
   background-color: red;
   border: none;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 10px;
   text-align: center;
   text-decoration-color: white;
   text-decoration-style: solid;
@@ -28,7 +28,8 @@ body {
 }
 
 .custom-select {
-  margin: 15px auto;
+  margin-top: 25px;
+  margin-bottom: 15px;
   text-align: center;
   width: 100%;
 }
@@ -38,8 +39,13 @@ select {
 }
 
 #text-out {
-  margin: 15px auto;
-  font-size: medium;
+  margin: 10px auto;
+  font-size: 14px;
+  color: red;
+}
+
+.dropdown-text{
+  font-size: 14px;
 }
 </style>
 
@@ -52,13 +58,13 @@ select {
 
 <div class="custom-select">
     <select id="percent-dropdown">
-      <option value="0">Summary Percentage</option>
-      <option value="1">20</option>
-      <option value="2">30</option>
-      <option value="3">40</option>
-      <option value="4">50</option>
-      <option value="5">60</option>
-      <option value="6">70</option>
+      <option class="dropdown-text" value="0">Summary Percentage</option>
+      <option class="dropdown-text" value="1">20</option>
+      <option class="dropdown-text" value="2">30</option>
+      <option class="dropdown-text" value="3">40</option>
+      <option class="dropdown-text" value="4">50</option>
+      <option class="dropdown-text" value="5">60</option>
+      <option class="dropdown-text" value="6">70</option>
     </select>
   </div>
 
