@@ -8,7 +8,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-
+'''
 # Imports the Google Cloud client library
 import io
 from google.cloud import speech
@@ -18,6 +18,7 @@ from google.cloud.speech import types
 # Imports Google Cloud Storage
 from google.cloud import storage
 from google.cloud.storage import Blob
+'''
 
 # Imports Youtube Caption API
 from youtube_transcript_api import YouTubeTranscriptApi
