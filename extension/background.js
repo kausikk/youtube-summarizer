@@ -1,84 +1,54 @@
 'use strict';
-console.log("background.js runs")
-//
-// chrome.runtime.onInstalled.addListener(setup);
-// function setup() {
-//   var sumPercent = 30;
-//
-//   chrome.storage.local.get(['key'], function(result) {
-//     if (result.key != null) {
-//       sumPercent = result.key;
-//     }
-//   });
-// }
-//
-//
-// chrome.storage.local.set({key: value}, function() {
-//   console.log('Value is set to ' + value);
-// });
-//
-//
+console.log("background.js runs");
 
-
-
-// var xhttp = new XMLHttpRequest();
-// xhttp.onreadystatechange = function() {
-//     if (this.readyState == 4 && this.status == 200) {
-//        console.log("server response: " + xhttp.responseText);
-//     }
-// };
-//
-// xhttp.open("GET", "http://127.0.0.1:8000/summarizer", true);
-// xhttp.send();
-chrome.extension.onConnect.addListener(function(port) {
+var port;
+chrome.extension.onConnect.addListener(function(newPort) {
       console.log("Connected .....");
-      port.onMessage.addListener(function(msg) {
-           console.log("message recieved" + msg);
-           port.postMessage("Hi Popup.js");
+      port = newPort;
+      port.onMessage.addListener(function(percent) {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+           var videoId = tabs[0].url.match('(?<=watch[?]v=).{11}');
+           if (videoId != null) {
+             isCaptionAvailable(videoId[0], percent);
+             //port.postMessage("noCaption");
+             console.log(videoId[0]);
+           }
+         });
       });
  })
 
+function isCaptionAvailable(videoId, percentage) {
+  var oReq = new XMLHttpRequest();
+  oReq.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if (this.responseText == 'true') {
+          getSummary(videoId, percentage);
+          chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+            chrome.tabs.sendMessage(tabs[0].id, {action: "startLoadingWindow"});
+          });
+        } else {
+          port.postMessage("noCaption");
+        }
+      }
+  };
 
-var prevUrl = ""
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if (tab.status == "complete" && tab.url != prevUrl) {
-    prevUrl = tab.url;
-  }
-});
+  oReq.open("GET", "http://127.0.0.1:8000/check?id=" + videoId, true);
+  oReq.send();
+}
 
-// let msg = {
-//   txt: "encrypted message!"
-// }
-// chrome.tabs.sendMessage(tab.id, msg);
+function getSummary(videoId, percentage) {
+  var oReq = new XMLHttpRequest();
+  oReq.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
 
-// chrome.webNavigation.onCompleted.addListener(function() {
-//   chrome.browserAction.setBadgeText({text: "ON"});
-//   alert("This is my favorite website!");
-// },
-// {
-//   url: [{urlMatches : 'https://www.youtube.com/*'}]
+      }
+  };
+
+  oReq.open("GET", "http://127.0.0.1:8000/execute?id=" + videoId + "&percentage=" + percentage, true);
+  oReq.send();
+}
+
+// var prevUrl = ""
+// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+//
 // });
-//
-//
-//
-// document.getElementById("summarizeButton").addEventListener('click', initializeSummary);
-
-
-
-// function saveTabData(tab) {
-//   if (tab.incognito) {
-//     return;
-//   } else {
-//     chrome.storage.local.set({data: tab.url});
-//   }
-// }
-//
-
-// function buttonClicked(tab) {
-//   console.log("button clicked!");
-//   console.log(tab);
-//
-//   let msg = {
-//     txt: "encrypted message!"
-//   }
-// chrome.tabs.sendMessage(tab.id, "heyo!");
