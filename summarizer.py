@@ -47,9 +47,7 @@ class Summary(object):
 
         summary = summary.replace("... ", ', ')
         summary = summary.replace('? ', '. ')
-        sentences = summary.split('. ')
-        for sentence in sentences:
-            sentence += '. '
+        sentences = summary.split('. ')  
         return sentences
 
 def run(url):
@@ -65,7 +63,9 @@ def run(url):
     pTranscript.write(punctuatedtranscript)
     final_sentences = summarizer.get_sentences(punctuatedtranscript)
     
-    sTranscript = open('transcripts.txt', 'w+')
+    temp = ''
     for sentence in final_sentences:
-        sTranscript.write(sentence)
-        sTranscript.write('\n')
+        temp += sentence
+        temp += ". \n"
+    sTranscript = open('transcripts.txt', 'w+')    
+    sTranscript.write(temp)
