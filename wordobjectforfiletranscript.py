@@ -1,16 +1,17 @@
-#word object with timestamp
+#word wrapper with timestamp
 class Word(object):
     def __init__(self, word, timestamp):
         self.word = word
         self.timestamp = timestamp
 
-#time object
+#timestamp wrapper
 class TimeStamp(object):
     def __init__(self, hours, minutes, seconds):
         self.hours = hours
         self.minutes = minutes
         self.seconds = seconds
 
+    #use this if you have raw seconds
     @classmethod
     def fromSeconds(cls, seconds):
         hours = seconds % 3600
@@ -20,9 +21,11 @@ class TimeStamp(object):
         seconds = seconds
         return TimeStamp(hours, minutes, seconds)
 
+    #pretty printing
     def __str__(self):
         return (str(self.hours) + ':' + str(self.minutes) + ':' + str(self.seconds))
 
+#does whatever tom says it does
 def parse_transcript_into_string(transcript):
     result = ""
     phrase_time_stamp_dict = {}
