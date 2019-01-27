@@ -52,6 +52,6 @@ function getSummary(videoId, percentage) {
       }
   };
 
-  oReq.open("GET", "http://127.0.0.1:8000/summarizer/execute/" + videoId + "/percentage/" + percentage, true);
+  oReq.open("GET", "http://127.0.0.1:8000/summarizer/execute/" + videoId + "/" + percentage, true);
   oReq.send();
 }
