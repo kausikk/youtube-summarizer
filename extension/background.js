@@ -39,16 +39,15 @@ function isCaptionAvailable(videoId, percent) {
   oReq.open("GET", "http://127.0.0.1:8000/summarizer/check/" + videoId, true);
   oReq.send();
 }
-//
-
-// }
 
 function getSummary(videoId, percentage) {
   console.log("Starting to obtain summary")
   var oReq = new XMLHttpRequest();
   oReq.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+          chrome.tabs.sendMessage(tabs[0].id, {action: "obtainedSummary", result: this.responseText});
+        });
       }
   };
 
