@@ -8,9 +8,10 @@ h2 {
   font-size: 15px;
 }
 body {
+  text-align: center;
   background-color: #f9f9f9;
   width: 180px;
-  height: 250px;
+  height: 150px;
 }
 .button {
   background-color: red;
@@ -22,68 +23,23 @@ body {
   text-decoration-style: solid;
   display: inline-block;
   font-size: 14px;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius: 10px;
-  margin: 31px;
 }
 
-/*.custom-select {
-  position: relative;
-  font-family: Arial;
-}
-
-.custom-select select {
-  display: none;
-}
-
-.select-selected {
-  background-color: DodgerBlue;
-}
-
-.select-selected:after {
-  position: absolute;
-  content: "";
-  top: 14px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: #fff transparent transparent transparent;
-}
-
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
-}
-
-.select-items div,.select-selected {
-  color: #ffffff;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-  user-select: none;
-}
-
-.select-items {
-  position: absolute;
-  background-color: DodgerBlue;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
-}
-
-.select-hide {
-  display: none;
-}
-
-.select-items div:hover, .same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
-}*/
 .custom-select {
+  margin: 15px auto;
+  text-align: center;
   width: 100%;
+}
+
+select {
+  width: 100%;
+}
+
+#text-out {
+  margin: 15px auto;
+  font-size: medium;
 }
 </style>
 
@@ -94,26 +50,23 @@ body {
 
 <h2>YouTube Summarizer</h2>
 
-
-<div class="custom-select" style="width:200px;">
+<div class="custom-select">
     <select>
-      <option value="0">Select car:</option>
-      <option value="1">Audi</option>
-      <option value="2">BMW</option>
-      <option value="3">Citroen</option>
-      <option value="4">Ford</option>
-      <option value="5">Honda</option>
-      <option value="6">Jaguar</option>
-      <option value="7">Land Rover</option>
-      <option value="8">Mercedes</option>
-      <option value="9">Mini</option>
-      <option value="10">Nissan</option>
-      <option value="11">Toyota</option>
-      <option value="12">Volvo</option>
+      <option value="0">Summery Factor</option>
+      <option value="1">20%</option>
+      <option value="2">30%</option>
+      <option value="3">40%</option>
+      <option value="4">50%</option>
+      <option value="5">60%</option>
+      <option value="6">70%</option>
     </select>
   </div>
 
 <button class="button"> <b>Summarize</b> </button>
+
+<div id="text-out">
+  No caption available.
+</div>
 
 </body>
 </html>
