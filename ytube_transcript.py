@@ -6,9 +6,9 @@ import os
 
 # Imports the Selenium libraries
 import time
-from selenium import webdriver  
-from selenium.webdriver.common.keys import Keys  
-from selenium.webdriver.chrome.options import Options  
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 
 # Imports the Google Cloud client library
 import io
@@ -24,18 +24,18 @@ def get_transcript(ytube_id):
     return get_transcript_from_url(ytube_url)
 
 # Private helpers------------------------------------------------
-def get_transcript_from_url(ytube_url):
+def get_transcript_from_url(ytube_id):
     result = 'Not available'
     try:
-        result = YouTubeTranscriptApi.get_transcript(video_id)
+        result = YouTubeTranscriptApi.get_transcript(ytude_id)
     except Exception as e:
         pass
     return results
 
 def get_ytube_mp3(ytube_url):
-    chrome_options = Options()  
-    chrome_options.add_argument('--headless')  
-    driver = webdriver.Chrome(options=chrome_options)  
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    driver = webdriver.Chrome(options=chrome_options)
 
     result = ''
     driver.get("https://www.onlinevideoconverter.com/youtube-converter")
@@ -48,7 +48,7 @@ def get_ytube_mp3(ytube_url):
     except Exception as e:
         print(e)
         result = 'No link found'
-    
+
     driver.quit()
     return result
 
