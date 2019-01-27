@@ -10,5 +10,4 @@
 - Must add chromedriver.exe to PATH
 # 3. For transcribing audio
 - pip install --upgrade google-cloud-speech
-- Make GOOGLE_APPLICATION_CREDENTIALS and point to credentials.json file
-- Install and initialize the Google Cloud SDK: https://cloud.google.com/sdk/docs/
+- Make GOOGLE_APPLICATION_CREDENTIALS environment variable and point to credentials.json file
