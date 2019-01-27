@@ -30,10 +30,10 @@ def get_transcript(ytube_id):
 def get_transcript_from_url(ytube_id):
     result = 'Not available'
     try:
-        result = YouTubeTranscriptApi.get_transcript(ytude_id)
+        result = YouTubeTranscriptApi.get_transcript(ytube_id)
     except Exception as e:
         pass
-    return results
+    return result
 
 def get_ytube_mp3(ytube_url):
     chrome_options = Options()

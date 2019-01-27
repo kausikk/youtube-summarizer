@@ -38,14 +38,34 @@ class Summary(object):
         }
         '''
         return 0
-
-    def get_sentences(self, text):
-        transcript = punctuate(text)
+    
+    #punctuates and summarizes
+    def get_sentences(self, transcript):
         summarizer = Summary(self.size)
         summarizer.get_summary(transcript)
         summary = summarizer.parse()
 
-        summary = summary.replace("... ", '. ')
+        summary = summary.replace("... ", ', ')
         summary = summary.replace('? ', '. ')
         sentences = summary.split('. ')
+        for sentence in sentences:
+            sentence += '. '
         return sentences
+
+def run(url):
+    from ytube_transcript import get_transcript_from_url
+    from wordobjectforfiletranscript import parse_transcript_into_string
+    transcript = get_transcript_from_url(url)
+    transcripted = parse_transcript_into_string(transcript)
+    uTranscript = open('transcriptu.txt', 'w+')
+    uTranscript.write(transcripted)
+    summarizer = Summary(20)
+    punctuatedtranscript = punctuate(transcripted)
+    pTranscript = open('transcriptp.txt', 'w+')
+    pTranscript.write(punctuatedtranscript)
+    final_sentences = summarizer.get_sentences(punctuatedtranscript)
+    
+    sTranscript = open('transcripts.txt', 'w+')
+    for sentence in final_sentences:
+        sTranscript.write(sentence)
+        sTranscript.write('\n')

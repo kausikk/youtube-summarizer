@@ -26,7 +26,8 @@ class TimeStamp(object):
 def parse_transcript_into_string(transcript):
     result = ""
     for entry in transcript:
-        result += entry
+        result += entry['text'] + ' '
+    return result
 
 #returns a list of words with timestamps from youtube api
 def parse_transcript_into_words(transcript):
@@ -63,9 +64,3 @@ def get_timestamp_from_file(line):
 #splits sentence
 def get_words_from_sentence(line):
     return line.split()
-
-test = parse_transcript_into_words_from_file('./ltttranscripts/ltttranscript.txt')
-
-for word in test:
-    print(word.word)
-    print(str(word.timestamp))
