@@ -1,12 +1,12 @@
 import requests
 import json
-from punctuator import punctuate
+from summarizer.punctuator import punctuate
 
 #usage: make a Summary object with the desired size, call get_sentences(transcript)
 #to get a transcript
 #basically, this sets up a way to interface with the resoomer API
 class Summary(object):
-    API_KEY =  "4A85F76E758693632041F21373D5B23D"
+    API_KEY =  "0706274D5BB2AF4C65B0B75129136F2D"
     URL = "https://resoomer.pro/summarizer/"
 
     def __init__(self, size):

@@ -26,7 +26,6 @@ function isCaptionAvailable(videoId, percent) {
   oReq.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       if (this.responseText == 'true') {
-        chrome.runtime.sendMessage({action: "respondToButton", result: ""});
         chrome.runtime.sendMessage({action: "startLoadingWindow"});
         getSummary(videoId, percent)
       } else {
@@ -35,7 +34,7 @@ function isCaptionAvailable(videoId, percent) {
     }
   };
 
-  oReq.open("GET", "http://127.0.0.1:8000/check/" + videoId, true);
+  oReq.open("GET", "http://127.0.0.1:8000/summarizer/check/" + videoId, true);
   oReq.send();
 }
 //
@@ -51,6 +50,6 @@ function getSummary(videoId, percentage) {
   //     }
   // };
   //
-  // oReq.open("GET", "http://127.0.0.1:8000/execute?id=" + videoId + "&percentage=" + percentage, true);
+  // oReq.open("GET", "http://127.0.0.1:8000/summarizer/execute?id=" + videoId + "&percentage=" + percentage, true);
   // oReq.send();
 }

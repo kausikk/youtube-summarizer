@@ -7,6 +7,7 @@ var LOADER_ELEM = '<div class="sk-circle"> <div class="sk-circle1 sk-child"></di
 var box = null;
 
 chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+    console.log("Hello!!!")
     if (msg.action == "startLoadingWindow") {
       if (box == null) {
         box = document.createElement('div');

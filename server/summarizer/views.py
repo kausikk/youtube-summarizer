@@ -2,32 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from django.shortcuts import render, get_object_or_404
-from ytube_transcript import get_transcript_from_url
-from wordobjectforfiletranscript import parse_transcript
-from punctuator import punctuate
-from summarizer import Summary
+from summarizer.ytube_transcript import get_transcript_from_url
+from summarizer.wordobjectforfiletranscript import parse_transcript
+from summarizer.punctuator import punctuate
+from summarizer.summary import Summary
 import json
 
 # Create your views here.
 
-transcript = ""
 
 def check(request, ytube_id):
-    global transcript
     transcript = get_transcript_from_url(ytube_id)
     if(transcript == "Not available"):
-        return HttpResponse(False)
+        return HttpResponse('false')
     else:
-        return HttpResponse(True)
+        return HttpResponse('true')
 
 
 def execute(request, ytube_id, percent):
+    percents = percent/100;
     transcript = get_transcript_from_url(ytube_id)
     transcript_raw, word_list = parse_transcript(transcript)
     transcript_raw = transcript_raw.replace('.', '*')
     punctuated_transcript = punctuate(transcript_raw)
     sentence_list = split_by_sentence(punctuated_transcript)
-    size = int(len(sentence_list)*percent)
+    size = int(len(sentence_list)*percents)
     sentence_time_dict = time_match(sentence_list, word_list)
     summarizer = Summary(size)
     summarized_list = summarizer.get_sentences(punctuated_transcript)
@@ -40,8 +39,6 @@ def dumper(obj):
     except:
         return obj.__dict__.copy()
 
-
-print json.dumps(obj, default=dumper, indent=2)
 
 def time_match(sentences, words):
     response = {}
