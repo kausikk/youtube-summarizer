@@ -39,6 +39,7 @@ def transcribe_streaming(stream_file):
                 print('Confidence: {}'.format(alternative.confidence))
                 print(u'Transcript: {}'.format(alternative.transcript))
 
+'''
 def explicit():
     from google.cloud import storage
 
@@ -52,5 +53,5 @@ def explicit():
     print(buckets)
 
 explicit()
-
+'''
 transcribe_streaming('testFile.opus')

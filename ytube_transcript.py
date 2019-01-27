@@ -17,7 +17,7 @@ def get_audio(url):
     driver.find_element_by_id('input').send_keys(url)
     driver.find_element_by_id('submit').click()
 
-    try:
+    """try:
         driver.implicitly_wait(5)
         result = driver.find_element_by_id('download').get_attribute('href')
     except Exception as e:
@@ -25,5 +25,5 @@ def get_audio(url):
         result = 'No link found'
     
     driver.quit()
-    print(result)
+    print(result)"""
 
