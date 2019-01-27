@@ -1,21 +1,40 @@
 {
-	"name": "YouTube Summarizer",
+	"name": "YT Summarizer",
 	"description" : "Base Level Extension",
-	"version": "1.0",
+	"version": "0.1",
+  "permissions": ["storage", "webNavigation"],
 	"manifest_version": 2,
 
-	"browser_action": {
-	  "default_popup": "summarizer.html",
-	  "default_icon": "extension_icon.png"
-	},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "http://www.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
 
-	"commands": {
-	  "_execute_browser_action": {
-	    "suggested_key": {
-	      "default": "Ctrl+Shift+Y",
-	      "mac": "MacCtrl+Shift+Y"
-	    },
-	    "description": "Opens summarizer.html"
-	  }
-	}
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "browser_action": {
+    "default_icon": "extension_icon.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "YouTube Summarizer"
+  },
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "Opens summarizer.html"
+    }
+  }
 }
