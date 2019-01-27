@@ -16,9 +16,9 @@ def check(request, ytube_id):
     global transcript
     transcript = get_transcript_from_url(ytube_id)
     if(transcript == "Not available"):
-        return HttpResponse("Caption not available")
+        return HttpResponse(False)
     else:
-        return HttpResponse("Caption available")
+        return HttpResponse(True)
 
 
 def execute(request, ytube_id, percent):
