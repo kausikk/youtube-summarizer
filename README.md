@@ -11,3 +11,5 @@
 # 3. For transcribing audio
 - pip install --upgrade google-cloud-speech
 - Make GOOGLE_APPLICATION_CREDENTIALS environment variable and point to credentials.json file
+# 4. For converting mp3 to ogg
+- pip install --upgrade pydub

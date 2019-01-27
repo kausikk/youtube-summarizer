@@ -12,16 +12,32 @@ from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 
+# Imports Youtube Caption API
+from youtube_transcript_api import YouTubeTranscriptApi
+
+def get_transcript(ytube_id):
+    ytube_url = 'https://www.youtube.com/watch?v=' + ytube_id
+    return get_transcript_from_url(ytube_url)
+
+# Private helpers------------------------------------------------
+def get_transcript_from_url(ytube_url):
+    result = 'Not available'
+    try:
+        result = YouTubeTranscriptApi.get_transcript(video_id)
+    except Exception as e:
+        pass
+    return results
+
 def get_ytube_mp3(ytube_url):
     chrome_options = Options()  
     chrome_options.add_argument('--headless')  
     driver = webdriver.Chrome(options=chrome_options)  
 
     result = ''
-    driver.get("https://ytmp3.cc/")
+    driver.get("https://www.onlinevideoconverter.com/youtube-converter")
 
-    driver.find_element_by_id('input').send_keys(ytube_url)
-    driver.find_element_by_id('submit').click()
+    driver.find_element_by_id('texturl').send_keys(ytube_url)
+    driver.find_element_by_id('convert1').click()
 
     try:
         result = wait_for_dl_link(driver)
@@ -53,17 +69,19 @@ def get_transcript_from_ogg(ogg_name):
         language_code='en-US')
 
     # Detects speech in the audio file
-    response = client.long_running_recognize(config, audio)
+    response = client.recognize(config, audio)
 
     for result in response.results:
         print('Transcript: {}'.format(result.alternatives[0].transcript))
 
-# Private helper
 def wait_for_dl_link(driver):
     i = 0
     result = ''
     while i < 10 and result == '':
-        i += 1
-        time.sleep(1)
-        result = driver.find_element_by_id('download').get_attribute('href')
+        try:
+            i += 1
+            time.sleep(1)
+            result = driver.find_element_by_id('downloadq').get_attribute('href')
+        except Exception as e:
+            print(e)
     return result
