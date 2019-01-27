@@ -1,3 +1,12 @@
 from django.db import models
-
+import datetime
+from django.utils import timezone
+from django.contrib.postgres.fields import ArrayField
 # Create your models here.
+
+class Summarizer(models.Model):
+    youtube_id = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    timestamp = ArrayField(JSONField())
+    summary = ArrayField(TextField())
+    time_summary_dict = JSONField()

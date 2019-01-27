@@ -25,13 +25,16 @@ class TimeStamp(object):
 
 def parse_transcript_into_string(transcript):
     result = ""
+    phrase_time_stamp_dict = {}
     for entry in transcript:
         result += entry['text'] + ' '
-    return result
+        phrase_time_stamp_dict[entry['text']] = entry['start']
+
+    return result, phrase_time_stamp_dict
 
 #returns a list of words with timestamps from youtube api
 def parse_transcript_into_words(transcript):
-    for entry in transcript: 
+    for entry in transcript:
         timestamp = TimeStamp.fromSeconds(entry['start'])
         sentence = get_words_from_sentence(entry['text'])
         wordList = []
@@ -48,7 +51,7 @@ def parse_transcript_into_words_from_file(fileName):
         line2 = line2.strip('\n')
         timestamp = get_timestamp_from_file(line1)
         sentence = get_words_from_sentence(line2)
-        for word in sentence: 
+        for word in sentence:
             wordList.append(Word(word, timestamp))
     return wordList
 
