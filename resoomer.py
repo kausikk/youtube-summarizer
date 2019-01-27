@@ -11,7 +11,7 @@ class get_summary:
         data = {"API_KEY" : self.API_KEY, "size" : size}
         self.response = requests.post(URL, data)
         return self.response.status_code;
-
+ 
     def parse(self):
         #need to parse json file
         '''
