@@ -26,14 +26,17 @@ class TimeStamp(object):
         return (str(self.hours) + ':' + str(self.minutes) + ':' + str(self.seconds))
 
 #does whatever tom says it does
-def parse_transcript_into_string(transcript):
+def parse_transcript(transcript):
     result = ""
-    phrase_time_stamp_dict = {}
+    word_list = []
     for entry in transcript:
         result += entry['text'] + ' '
-        phrase_time_stamp_dict[entry['text']] = entry['start']
+        timestamp = TimeStamp.fromSeconds(entry['start'])
+        sentence = get_words_from_sentence(entry['text'])
+        for word in sentence:
+            word_list.append(Word(word, timestamp))
+    return result, word_list
 
-    return result, phrase_time_stamp_dict
 
 #returns a list of words with timestamps from youtube api
 def parse_transcript_into_words(transcript):
