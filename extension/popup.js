@@ -5,11 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeSummary() {
-  chrome.runtime.sendMessage({action: "initializeSummary", percent: 2}, (response) => {});
+  var dropdown = document.getElementById('percent-dropdown')
+  value = dropdown.options[dropdown.selectedIndex].text
+  console.log(value)
+  chrome.runtime.sendMessage({action: "initializeSummary", percent: value}, (response) => {});
 }
 
 chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
     if (msg.action == "respondToButton") {
-      console.log(msg.result);
+      document.getElementById('text-out').innerHTML = msg.result
     }
 });

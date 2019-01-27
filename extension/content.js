@@ -18,9 +18,7 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
         var column = document.getElementById('primary-inner');
         column.insertBefore(box, column.children[2]);
       }
-    } else if (msg.action == "otainedSummary") {
-
-    } else if (msg.action == "timeout") {
+    } else if (msg.action == "obtainedSummary") {
 
     }
 });
