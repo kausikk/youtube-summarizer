@@ -4,17 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('button').addEventListener('click', initializeSummary);
 });
 
-var port = chrome.extension.connect({
-    name: "Port"
-});
-
-function initializeSummary(tab) {
-  console.log("Summary initialized.");
-  port.postMessage(40);
+function initializeSummary() {
+  chrome.runtime.sendMessage({action: "initializeSummary", percent: 2}, (response) => {});
 }
 
-port.onMessage.addListener(function(msg) {
-  if (msg == "noCaption") {
-    console.log("No caption for this video!");
-  }
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+    if (msg.action == "respondToButton") {
+      console.log(msg.result);
+    }
 });
