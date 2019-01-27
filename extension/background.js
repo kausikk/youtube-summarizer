@@ -26,7 +26,9 @@ function isCaptionAvailable(videoId, percent) {
   oReq.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       if (this.responseText == 'true') {
-        chrome.runtime.sendMessage({action: "startLoadingWindow"});
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+          chrome.tabs.sendMessage(tabs[0].id, {action: "startLoadingWindow"});
+        });
         getSummary(videoId, percent)
       } else {
         chrome.runtime.sendMessage({action: "respondToButton", result: "No caption available"});
@@ -43,13 +45,13 @@ function isCaptionAvailable(videoId, percent) {
 
 function getSummary(videoId, percentage) {
   console.log("Starting to obtain summary")
-  // var oReq = new XMLHttpRequest();
-  // oReq.onreadystatechange = function() {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //
-  //     }
-  // };
-  //
-  // oReq.open("GET", "http://127.0.0.1:8000/summarizer/execute?id=" + videoId + "&percentage=" + percentage, true);
-  // oReq.send();
+  var oReq = new XMLHttpRequest();
+  oReq.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+      }
+  };
+
+  oReq.open("GET", "http://127.0.0.1:8000/summarizer/execute/" + videoId + "/percentage/" + percentage, true);
+  oReq.send();
 }
