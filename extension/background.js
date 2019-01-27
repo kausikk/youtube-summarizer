@@ -1,6 +1,9 @@
 'use strict';
 console.log("background.js runs");
 
+var prevUrl = '';
+var prevSummary = '';
+
 chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
     if (msg.action == "initializeSummary") {
       chrome.tabs.query({active: true, lastFocusedWindow: true}, (tabs) => {
