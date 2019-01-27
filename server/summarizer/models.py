@@ -9,5 +9,5 @@ class Summarizer(models.Model):
     youtube_id = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     timestamp = ArrayField(JSONField())
-    summary = ArrayField(TextField())
+    summary = ArrayField(models.TextField())
     time_summary_dict = JSONField()

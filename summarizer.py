@@ -7,22 +7,24 @@ from punctuator import punctuate
 #basically, this sets up a way to interface with the resoomer API
 class Summary(object):
     API_KEY =  "4A85F76E758693632041F21373D5B23D"
-    URL = "https://resoomer.pro/summarizer/size"
+    URL = "https://resoomer.pro/summarizer/"
 
     def __init__(self, size):
         self.size = size
 
     #queries resoomer and stores response into this object
     def get_summary(self, text):
-        data = {"API_KEY" : Summary.API_KEY, "text" : text, "size" : self.size}
+        data = {"API_KEY" : Summary.API_KEY, "size": self.size, "text" : text}
         self.response = requests.post(Summary.URL, data)
-        return self.response.status_code;
+        status_code = self.response.status_code
+        self.response = self.response.json()
+        return status_code
 
     #parses the response, must be used after get_summary
     #extracts the contents
     def parse(self):
         #need to parse json file
-        resp = self.response.json()
+        resp = self.response
         result = resp['text']['content']
         result = result[:-6]
         return result
@@ -45,15 +47,26 @@ class Summary(object):
     #summarizes a transcript by calling the appropriate functions
     #should be punctuated first
     def get_sentences(self, transcript):
-        summarizer = Summary(self.size)
-        summarizer.get_summary(transcript)
-        summary = summarizer.parse()
+        self.get_summary(transcript)
+        summary = self.parse()
 
         #reformatting string
         summary = summary.replace("... ", ', ')
         summary = summary.replace('? ', '. ')
+        summary = summary.replace("<br /><br />", "")
+        summary = summary.replace("<br />", "")
         sentences = summary.split('. ')
+        for sentence in sentences:
+            if len(sentence) < 3:
+                sentences.remove(sentence)
+
         return sentences
+
+text = '''
+Just time for a quick recap of the week - and it has been a dramatic one for President Trump - a flesh vessel possessed by the world's thirty dumbest ghosts on Wednesday, an unnamed senior White House official wrote an op-ed in The Times, claiming that Trump's actions are detrimental To the health of our republic, Trump immediately push back, tweeting treason in all caps and then attacks the anonymous writer at a rally. The latest act of resistors is the op-ed published in the failing New York Times by an anonymous, really ended anomalies. That was Howard. You know I don't like Trump's policies, ideas or demeanor, but I do like how he occasionally sounds like a Teddy Ruxpin someone fished out of a lake, reportedly obsessed with finding out the anonymous source. His problem is, it seems like it could be. Almost anyone who works for it, because this week also saw explosive excerpts from Bob Woodward's upcoming book, in which general mattis is quoted as saying Trump has the understanding of a fifth or sixth grader and John Kelly reportedly says we're in crazy town. I don't even know why any of us are here. This is the worst job I've ever had now. Now both men deny making those statements absolutely sure that Kelly loves his job. He seems so happy whenever you see the books most incredible claim. Is that John doubt the president's then lawyer went directly to robert muller and told him trump was such a disaster during a practice interrogation that he couldn't possibly allow him to testify? Woodward quotes dad is saying during a march 5th meeting with muller, i'm not going to sit there and let him look like an idiot and you published that transcript, because everything leaks in washington and the guys overseas are going to say. I told you he was an idiot, i told you he was a goddamn dumbbell, [ Applause, ] prosecutor, a prosecutor that his client will be so stupid under questioning it would be a genuine national security concern. Well, Dowd also denied those comments. Let'S just appreciate for a moment how charming it is to call anyone a god, damn dumbbell, it's so much more delightful than idiot or dipshit or fucking. Moron dumbbell just puts a fun cartoon image in your head anyway, the president said disaster and we're all gon na die. Meanwhile, meanwhile, the week
+'''
+summarizer = Summary(20)
+print(summarizer.get_sentences(text))
 
 #example way to go from url to summary
 def run(url):

@@ -1,4 +1,4 @@
-#import
+import wordobjectforfiletranscript import Word,
 def time_match(sentences, words):
     response = {}
     while len(ordered_word) != 0:
