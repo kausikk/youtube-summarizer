@@ -16,10 +16,9 @@ class TimeStamp(object):
     #use this if you have raw seconds
     @classmethod
     def fromSeconds(cls, seconds):
-        hours = int(seconds/3600)
-        seconds -= hours * 3600
-        minutes = int(seconds/60)
-        seconds = seconds%60
+        hours = int(seconds / 3600)
+        minutes = int(seconds / 60)
+        seconds = seconds % 60
         return TimeStamp(hours, minutes, seconds)
 
     #pretty printing
@@ -74,3 +73,5 @@ def get_timestamp_from_file(line):
 #splits sentence
 def get_words_from_sentence(line):
     return line.split()
+
+t = fromSeconds(3610)
