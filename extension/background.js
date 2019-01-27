@@ -30,21 +30,13 @@ console.log("background.js runs")
 //
 // xhttp.open("GET", "http://127.0.0.1:8000/summarizer", true);
 // xhttp.send();
-chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
-{
-    if( request.greeting === "GetURL" )
-    {
-        var tabURL = "Not set yet";
-        chrome.tabs.query({active:true},function(tabs){
-            if(tabs.length === 0) {
-                sendResponse({});
-                return;
-            }
-            tabURL = tabs[0].url;
-            sendResponse( {navURL:tabURL} );
-        });
-    }
-})
+chrome.extension.onConnect.addListener(function(port) {
+      console.log("Connected .....");
+      port.onMessage.addListener(function(msg) {
+           console.log("message recieved" + msg);
+           port.postMessage("Hi Popup.js");
+      });
+ })
 
 
 var prevUrl = ""
