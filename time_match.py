@@ -6,6 +6,6 @@ def time_match(sentences, words):
         word = ordered_pair.getWord()
         sentence = sentences.popleft()
         sentence_array = sentence.split()
-        response[sentence] = ordered_pair[1]
+        response[sentence] = ordered_pair.getTime()
         for i in range(len(sentence_array)):
             words.popleft()
