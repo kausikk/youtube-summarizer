@@ -1,5 +1,20 @@
 # youtube-summarizer
 
+
+#What it is:
+-
+
+#How to use:
+- Set up a virtual environment in an appropriate location
+- Activate the virtual environment and install dependencies
+```
+pip install -r requirement.txt
+```
+- Open up chrome://extensions/ and switch on Developer mode
+- Select load unpacked and select the extension folder in this repo
+- Open up Youtube and summarizing again !
+
+
 # Dependencies:
 
 # 1. For getting Youtube captions 
