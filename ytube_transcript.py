@@ -1,7 +1,6 @@
 """
 Library for obtaining/generating transcript for a youtube video
 """
-
 import os
 
 # Imports the Selenium libraries
@@ -15,6 +14,10 @@ import io
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+
+# Imports Google Cloud Storage
+from google.cloud import storage
+from google.cloud.storage import Blob
 
 # Imports Youtube Caption API
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -65,24 +68,18 @@ def wait_for_dl_link(driver):
     return result
 
 def get_transcript_from_ogg(ogg_name):
-
     # Instantiates a client
     client = speech.SpeechClient()
 
-    audio_file = make_path_name(ogg_name)
-
-    # Loads the audio into memory
-    with io.open(file_name, 'rb') as audio_file:
-        content = audio_file.read(1058333)
-        audio = types.RecognitionAudio(content=content)
-
+    audio = types.RecognitionAudio(uri='gs://youtube-sum/' + ogg_name)
     config = types.RecognitionConfig(
         encoding=enums.RecognitionConfig.AudioEncoding.OGG_OPUS,
         sample_rate_hertz=48000,
         language_code='en-US')
 
     # Detects speech in the audio file
-    response = client.recognize(config, audio)
+    operation = client.long_running_recognize(config, audio)
+    response = operation.result()
 
     for result in response.results:
         print('Transcript: {}'.format(result.alternatives[0].transcript))
@@ -92,13 +89,14 @@ def upload_audio(ogg_name):
     bucket = storage_client.get_bucket('youtube-sum')
     blob = bucket.blob(ogg_name)
 
-    blob.upload_from_filename(make_path_name(ogg_name))
+    source_file_name = make_path_name(ogg_name)
+    blob.upload_from_filename(source_file_name)
 
-    print('File {} uploaded to {}.'.format(
+    print('File {} uploaded to gs://youtube-sum/{}'.format(
         source_file_name,
-        destination_blob_name))
+        ogg_name))
 
-def make_path_name(file_name)
+def make_path_name(file_name):
     return os.path.join(
         os.path.dirname(__file__),
         file_name)

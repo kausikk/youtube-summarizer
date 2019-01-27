@@ -1,12 +1,10 @@
 import requests
 
-def punctuate(fileName):
+def punctuate(transcript):
     url = 'http://bark.phon.ioc.ee/punctuator'
-    file = open(fileName, 'r').read().replace('\n', ' ')
-    text = {'text' : file}
+    transcript = transcript.replace('\n', ' ')
+    text = {'text' : transcript}
 
     r = requests.post(url, data=text)
 
-    newFile = open(fileName, 'w+')
-    newFile.write(r.text)
-    return 0
+    return r.text
