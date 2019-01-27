@@ -6,8 +6,8 @@ from summarizer.punctuator import punctuate
 #to get a transcript
 #basically, this sets up a way to interface with the resoomer API
 class Summary(object):
-    API_KEY =  "0706274D5BB2AF4C65B0B75129136F2D"
-    URL = "https://resoomer.pro/summarizer/"
+    API_KEY =  "570E046C8BDC6F1135C159A938F6A528"
+    URL = "https://resoomer.pro/summarizer/size/"
 
     def __init__(self, size):
         self.size = size

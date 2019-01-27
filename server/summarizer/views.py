@@ -20,16 +20,15 @@ def check(request, ytube_id):
 
 
 def execute(request, ytube_id, percent):
-    percents = percent/100;
     transcript = get_transcript_from_url(ytube_id)
     transcript_raw, word_list = parse_transcript(transcript)
     transcript_raw = transcript_raw.replace('.', '*')
     punctuated_transcript = punctuate(transcript_raw)
-    sentence_list = split_by_sentence(punctuated_transcript)
-    size = int(len(sentence_list)*percents)
+    sentence_list = split_by_sentence(punctuated_transcript)    
     sentence_time_dict = time_match(sentence_list, word_list)
-    summarizer = Summary(size)
+    summarizer = Summary(percent)
     summarized_list = summarizer.get_sentences(punctuated_transcript)
+    print(len(summarized_list))
     time_stamp_dict = return_time_stamp(sentence_time_dict, summarized_list)
     return HttpResponse(json.dumps(time_stamp_dict, default = dumper, indent = 2))
 
@@ -42,6 +41,7 @@ def dumper(obj):
 
 def time_match(sentences, words):
     response = {}
+    response2 = {}
     while len(words) != 0:
         ordered_pair = words[0]
         del words[0]
@@ -57,6 +57,7 @@ def time_match(sentences, words):
                 del words[0]
             else:
                 break
+        response2[sentence]= ordered_pair.timestamp
     return response
 
 def split_by_sentence(text):
