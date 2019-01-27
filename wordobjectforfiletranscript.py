@@ -11,20 +11,27 @@ class TimeStamp(object):
         self.minutes = minutes
         self.seconds = seconds
 
-    def __init__(self, seconds):
-        self.hours = seconds % 3600
+    @classmethod
+    def fromSeconds(cls, seconds):
+        hours = seconds % 3600
         seconds = int(seconds / 3600)
-        self.minutes = seconds % 60
+        minutes = seconds % 60
         seconds = int(seconds / 60)
-        self.seconds = seconds
+        seconds = seconds
+        return TimeStamp(hours, minutes, seconds)
 
     def __str__(self):
         return (str(self.hours) + ':' + str(self.minutes) + ':' + str(self.seconds))
 
+def parse_transcript_into_string(transcript):
+    result = ""
+    for entry in transcript:
+        result += entry
+
 #returns a list of words with timestamps from youtube api
 def parse_transcript_into_words(transcript):
     for entry in transcript: 
-        timestamp = TimeStamp(entry['start'])
+        timestamp = TimeStamp.fromSeconds(entry['start'])
         sentence = get_words_from_sentence(entry['text'])
         wordList = []
         for word in sentence:
