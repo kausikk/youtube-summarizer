@@ -1,16 +1,20 @@
+console.log("popup.js runs");
+
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('button').addEventListener('click', initializeSummary);
 });
 
 var port = chrome.extension.connect({
-    name: "Sample Communication"
+    name: "Port"
 });
 
 function initializeSummary(tab) {
   console.log("Summary initialized.");
-  port.postMessage("wantURL");
+  port.postMessage(40);
 }
 
 port.onMessage.addListener(function(msg) {
-    console.log("message recieved" + msg);
+  if (msg == "noCaption") {
+    console.log("No caption for this video!");
+  }
 });
