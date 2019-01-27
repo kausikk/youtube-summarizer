@@ -45,8 +45,9 @@ function getSummary(videoId, percentage) {
   var oReq = new XMLHttpRequest();
   oReq.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+        var json = this.responseText;
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-          chrome.tabs.sendMessage(tabs[0].id, {action: "obtainedSummary", result: this.responseText});
+          chrome.tabs.sendMessage(tabs[0].id, {action: "obtainedSummary", result: json, vidId: videoId});
         });
       }
   };
