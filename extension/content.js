@@ -1,12 +1,13 @@
-
-
-// let paragraphs = document.getElementsByTagName('p');
-// for (elt of paragraphs) {
-//   elt.style['background-color'] = '#FF00FF';
-// }
-// tab.url
+console.log("content.js runs");
+//
+//
 // chrome.runtime.onMessage.addListener(gotMessage);
 //
 // function gotMessage(message, sender, sendResponse) {
-//   console.log(message.txt);
+//   console.log(message);
 // }
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+      sendResponse({action: "okay"});
+  });

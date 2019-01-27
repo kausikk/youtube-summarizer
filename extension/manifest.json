@@ -3,14 +3,13 @@
 	"description" : "This Chrome extension allows summarizing of a YouTube video by
   displaying a graph of most important its sections with a bulletpoint summary.",
 	"version": "0.1",
-  "permissions": ["storage", "webNavigation", "http://127.0.0.1:8000/"],
+  "permissions": ["storage", "webNavigation", "http://127.0.0.1:8000/", "tabs"],
 	"manifest_version": 2,
 
   "content_scripts": [
     {
       "matches": [
-        "https://www.youtube.com/*",
-        "http://www.youtube.com/*"
+        "https://www.youtube.com/watch?v=*"
       ],
       "js": [
         "content.js"
@@ -25,7 +24,7 @@
 
   "browser_action": {
     "default_icon": "extension_icon.png",
-    "default_popup": "popup/popup.html",
+    "default_popup": "popup.html",
     "default_title": "YouTube Summarizer"
   }
 }
